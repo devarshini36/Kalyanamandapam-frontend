@@ -38,7 +38,14 @@
   font-weight: bold;
   color: #3c857d;
 }
-
+.form-lab{
+  
+  margin-top: 10px;
+  margin-bottom: 10px;
+  line-height: 10px;
+  font-weight: bold;
+  color: #3c857d;
+}
 /* Form Controls */
 .form-control {
   margin-bottom: 15px;
@@ -249,4 +256,21 @@ a:hover {
   background-color: #f0f0f0;
   cursor: not-allowed;
   color: #aaa;
+}
+
+
+
+.form-check-input {
+  margin-right: 10px;
+}
+.form-check-label {
+  margin-right: 5px;
+}
+.event-type-container {
+  display: flex;
+  align-items: center;
+}
+.event-select {
+  margin-left: 20px;
+  flex-grow: 1;
 }

@@ -9,7 +9,9 @@ function CombinedForm() {
   const [numGuests, setNumGuests] = useState();
   const [numDays, setNumDays] = useState();
   const [totalPrice, setTotalPrice] = useState(50000);
-  const [withRooms, setWithRooms] = useState(null); // Initially unselected
+  const [withRooms, setWithRooms] = useState(null);
+  const [isPrivateEvent, setIsPrivateEvent] = useState(null);
+  const [otherEvent, setOtherEvent] = useState('');   // Initially unselected
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -55,7 +57,9 @@ function CombinedForm() {
       selectedDates,
       numGuests,
       numDays,
-      totalPrice
+      totalPrice,
+      isPrivateEvent,
+      otherEvent
     };
 
     try {
@@ -190,22 +194,83 @@ function CombinedForm() {
                 selectedDates={selectedDates}
                 setSelectedDates={setSelectedDates}
               />
-            <div className="col-md-6">
-  <label htmlFor="event" className="form-label">Select Event*</label>
-  <select
-    id="event"
-    className="form-control"
-    value={formData.event}
-    onChange={handleInputChange}
-  >
-    <option value="" disabled>Select an event</option>
-    <option value="Wedding">Wedding</option>
-    <option value="Engagement">Engagement</option>
-    <option value="Reception">Reception</option>
-    <option value="Birthday party">Birthday party</option>
-    <option value="Meeting">Meeting</option>
-    <option value="Baby Shower">Baby Shower</option>
-  </select>
+  <div className="col-md-6">
+  <label htmlFor="event" className="form-lab">Select Event Type*</label>
+  <div className="event-type-container">
+    <div>
+      <div className="form-check">
+        <input
+          className="form-check-input"
+          type="radio"
+          id="privateEvent"
+          checked={isPrivateEvent === true}
+          onChange={() => setIsPrivateEvent(true)}
+        />
+        <label className="form-check-label" htmlFor="privateEvent">Personal</label>
+      </div>
+      <div className="form-check">
+        <input
+          className="form-check-input"
+          type="radio"
+          id="publicEvent"
+          checked={isPrivateEvent === false}
+          onChange={() => setIsPrivateEvent(false)}
+        />
+        <label className="form-check-label" htmlFor="publicEvent">Official</label>
+      </div>
+      <div className="form-check">
+        <input
+          className="form-check-input"
+          type="radio"
+          id="otherEventRadio"
+          checked={isPrivateEvent === 'other'}
+          onChange={() => setIsPrivateEvent('other')}
+        />
+        <label className="form-check-label" htmlFor="otherEventRadio">Others</label>
+      </div>
+    </div>
+    {isPrivateEvent === 'other' && (
+      <input
+        type="text"
+        id="otherEvent"
+        className="form-control event-select"
+        placeholder="Enter event type"
+        value={otherEvent}
+        onChange={(e) => setOtherEvent(e.target.value)}
+        required
+      />
+    )}
+    {isPrivateEvent !== 'other' && isPrivateEvent !== null && (
+      <select
+        id="event"
+        className="form-control event-select"
+        value={formData.event}
+        onChange={handleInputChange}
+        required
+      >
+        <option value="" disabled>Select an event</option>
+        {isPrivateEvent
+          ? <>
+              <option value="Wedding">Wedding</option>
+              <option value="Engagement">Engagement</option>
+              <option value="Reception">Reception</option>
+              <option value="Birthday party">Birthday party</option>
+              <option value="Meeting">Meeting</option>
+              <option value="Baby Shower">Baby Shower</option>
+              
+            </>
+          : <>
+              <option value="political">Political Meetings</option>
+              <option value="business">Business Meetings</option>
+              <option value="conference">Conferences</option>
+              <option value="shows">Shows</option>
+              <option value="workshop">Workshops</option>
+              
+            </>
+        }
+      </select>
+    )}
+  </div>
 </div>
 
               <div className="col-md-12">
